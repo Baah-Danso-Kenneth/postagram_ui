@@ -1,10 +1,12 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
+import { getUser } from '../hooks/user.action'
 
-function ProtectedRoute({Children}) {
-    const {user} = JSON.parse(localStorage.getItem("auth"))
 
-  return user.account ? <>{Children}</> : <Navigate to="/login/"/>
+function ProtectedRoute({children}) {
+   const user = getUser()
+
+  return user ? <>{children}</> : <Navigate to="/login/"/>
 
 }
 
