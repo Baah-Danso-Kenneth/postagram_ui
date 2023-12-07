@@ -7,7 +7,13 @@ import { useNavigate } from 'react-router-dom'
 function RegistrationForm() {
   const navigate = useNavigate()
   const [validated, setValidated] = useState(false)
-  const [form,setForm]=useState({})
+  const [form,setForm]=useState({
+    username:"",
+    first_name:"",
+    email:"",
+    last_name:"",
+    bio:""
+  })
   const [error, setError]=useState(null)
 
   const handleSubmit=(event)=>{
@@ -22,13 +28,14 @@ function RegistrationForm() {
      const data = {
       username:form.username,
       password:form.password,
+      email:form.email,
       first_name:form.first_name,
       last_name:form.last_name,
       bio:form.bio,
      }
 
 
-     axios.post("http://localhost:8000/api/register/",data)
+     axios.post("http://localhost:8000/api/auth/register/",data)
      .then((res)=>{
       localStorage.setItem("auth", JSON.stringify({
         access:res.data.access,
@@ -99,7 +106,7 @@ function RegistrationForm() {
         <Form.Group className="mb-3">
         <Form.Label>Email</Form.Label>
         <Form.Control
-         value={form.first_name}
+         value={form.email}
          onChange={(e)=>setForm({...form, email:e.target.value})}
          required
          type="email"
@@ -116,7 +123,7 @@ function RegistrationForm() {
         <Form.Control
          value={form.password}
          minLength="8"
-         onChange={(e)=>setForm({...form, first_name:e.target.value})}
+         onChange={(e)=>setForm({...form, password:e.target.value})}
          required
          type="password"
          placeholder='Password'
@@ -126,7 +133,7 @@ function RegistrationForm() {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <div className="text-content tex-danger">
+      <div className="text-content text-danger">
         {error && <p>{error}</p>}
       </div>
 
