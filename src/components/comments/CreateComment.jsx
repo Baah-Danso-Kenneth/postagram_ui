@@ -64,7 +64,7 @@ function CreateComment(props) {
       onSubmit={handleSubmit}
     >
       <Image
-        src={avatar}
+        src={user.avatar}
         roundedCircle
         width={48}
         height={48}
