@@ -2,17 +2,19 @@ import React from 'react'
 import Layout from '../components/Layout'
 import { getUser } from '../hooks/user.action'
 import { Row, Col, Image } from 'react-bootstrap';
-import { randomAvatar } from '../utils';
 import CreatePost from '../components/post/CreatePost';
 import { fetcher } from '../helpers/axios';
 import useSWR from 'swr'
 import Post from '../components/post/Post';
+import ProfileCard from '../components/profile/ProfileCard';
 
 
 function Home() {
   const posts = useSWR("/post/", fetcher,{
     refreshInterval:10000,
   })
+  const profiles = useSWR("/user/?limit=5", fetcher)
+
   const user = getUser();
 
   if(!user){
@@ -26,7 +28,7 @@ function Home() {
           <Row className='border rounded align-items-center'>
             <Col>
              <Image
-               src={randomAvatar()}
+               src={user.avatar}
                roundedCircle
                width={52}
                height={52}
@@ -46,6 +48,15 @@ function Home() {
               )
              })}
           </Row>
+         </Col>
+
+         <Col sm={3} className='border rounded py-4 h-50'>
+           <h4 className='font-weight-bold text-center'>Suggested people</h4>
+           <div className="d-flex flex-column">
+              {profiles.data && profiles?.data.results.map((profile,index)=>(
+                <ProfileCard key={index} user={profile}/>
+              ))}
+           </div>
          </Col>
        </Row>
     </Layout>

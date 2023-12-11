@@ -3,7 +3,6 @@ import { format } from 'timeago.js'
 import {LikeFilled, CommentOutlined, LikeOutlined, MoreOutlined} from '@ant-design/icons'
 import {Image, Card, Dropdown} from 'react-bootstrap'
 import axiosService from '../../helpers/axios';
-import { randomAvatar } from '../../utils';
 import Toaster from '../Toaster';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../hooks/user.action';
@@ -24,7 +23,7 @@ const MoreToggleIcon = React.forwardRef(({onClick},ref)=>(
 
 
 function Post(props) {
-    const {post, refresh} = props;
+    const {post, refresh, isSinglePost} = props;
     const [showToast, setShowToast]= useState(false)
     const user = getUser()
 
@@ -54,7 +53,7 @@ function Post(props) {
             <Card.Title className="d-flex flex-row justify-content-between">
                 <div className='d-flex flex-row'>
                     <Image 
-                     src={randomAvatar()}
+                     src={post?.author?.avatar}
                      roundedCircle
                      width={48}
                      height={48}
@@ -93,10 +92,22 @@ function Post(props) {
                     margin:"3px"
                 }}
                 />
+
+
                 <p className='ms-1'>
                     <small>{post.likes_count} like</small>
                 </p>
             </div>
+
+             {!isSinglePost && (
+              <p className="ms-1 fs-6">
+                <small>
+                  <Link to={`/post/${post.id}/`}>
+                    {post.comments_count} comments
+                  </Link>
+                </small>
+              </p>
+            )}
         </Card.Body>
 
         <Card.Footer className='d-flex bg-white w-50 justify-content-between border-0'>
@@ -120,8 +131,9 @@ function Post(props) {
                 <p className='ms-1'> <small>Like</small> </p>
             </div>
 
-            <div className="d-flex">
-                <CommentOutlined
+           {!isSinglePost && (
+              <div className="d-flex flex-row">
+                 <CommentOutlined
                   style={{
                     width:"24px",
                     height:"24px",
@@ -130,9 +142,11 @@ function Post(props) {
                     color:"#C4C4C4"
                   }}
                 />
-
                 <p className='ms-1 mb-0'> <small>Comment</small></p>
             </div>
+           )}
+
+
         </Card.Footer>
       </Card>
 
