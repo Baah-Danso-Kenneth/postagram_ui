@@ -14,7 +14,7 @@ function UpdateComment(props) {
         post:postId
     })
 
-    const {taoster, setToaster}=useContext(Context)
+    const { setToaster}=useContext(Context)
     const handleClose=()=>setShow(false)
     const handleShow=()=>setShow(true)
 
