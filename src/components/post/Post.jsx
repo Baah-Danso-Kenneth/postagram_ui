@@ -3,7 +3,6 @@ import { format } from 'timeago.js'
 import {LikeFilled, CommentOutlined, LikeOutlined, MoreOutlined} from '@ant-design/icons'
 import {Image, Card, Dropdown} from 'react-bootstrap'
 import axiosService from '../../helpers/axios';
-import { randomAvatar } from '../../utils';
 import Toaster from '../Toaster';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../hooks/user.action';
@@ -54,7 +53,7 @@ function Post(props) {
             <Card.Title className="d-flex flex-row justify-content-between">
                 <div className='d-flex flex-row'>
                     <Image 
-                     src={randomAvatar()}
+                     src={post?.author?.avatar}
                      roundedCircle
                      width={48}
                      height={48}
