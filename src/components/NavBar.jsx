@@ -1,11 +1,12 @@
 import React from 'react'
 import { Navbar, Container, Image, NavDropdown, Nav } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { randomAvatar } from '../utils'
-
+import { getUser } from '../hooks/user.action'
+import { Link } from 'react-router-dom'
 
 function Navigationbar() {
     const navigate = useNavigate()
+    const user=getUser()
 
     const handleLogout=()=>{
         localStorage.removeItem("auth")
@@ -23,7 +24,7 @@ function Navigationbar() {
                     <NavDropdown
                         title={
                             <Image
-                            src={randomAvatar()}
+                            src={user.avatar}
                             roundedCircle
                             width={36}
                             height={36}
@@ -31,8 +32,8 @@ function Navigationbar() {
                             />
                         }
                     >
-                        <NavDropdown.Item href="#">Profile</NavDropdown.Item>
-                        <NavDropdown.Item href="#" onClick={handleLogout}>Logout</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={`/profile/${user.id}/`}>Profile</NavDropdown.Item>
+                        <NavDropdown.Item  onClick={handleLogout}>Logout</NavDropdown.Item>
 
                     </NavDropdown>
 
