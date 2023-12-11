@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import Registration from './pages/Registration'
 import Login from './pages/Login'
 import SinglePost from './pages/SinglePost'
+import Profile from './pages/Profile'
+import ProfileEdit from './components/profile/ProfileEdit'
 
 
 function App() {
@@ -12,6 +14,8 @@ function App() {
     <Routes>
       <Route path="/" element={ <ProtectedRoute><Home/></ProtectedRoute>}/>
       <Route path='/post/:postId/' element={<ProtectedRoute><SinglePost/></ProtectedRoute>}/>
+       <Route path="/profile/:profileId/" element={<ProtectedRoute><Profile /></ProtectedRoute> }/>
+       <Route path="/profile/:profileId/edit/" element={<ProtectedRoute><ProfileEdit/></ProtectedRoute>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Registration/>}/>
     </Routes>
